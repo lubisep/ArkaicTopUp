@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertanyaan Umum - Arkaic TopUp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0d1222; color: #ffffff; display: flex; min-height: 100vh; }
+        
+        .sidebar { width: 240px; background-color: #12182d; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(255, 255, 255, 0.05); position: fixed; height: 100vh; overflow-y: auto; }
+        .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 30px; }
+        .brand i { color: #3b82f6; font-size: 24px; }
+        .nav-menu { list-style: none; }
+        .nav-menu li { margin-bottom: 15px; }
+        .nav-menu a { color: #8b92b0; text-decoration: none; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; transition: 0.3s; }
+        .nav-menu a:hover, .nav-menu a.active { color: #3b82f6; }
+        .sidebar-footer { margin-top: 30px; }
+        .social-icons { display: flex; gap: 15px; margin-bottom: 15px; }
+        .social-icons a { color: #8b92b0; font-size: 18px; transition: 0.3s; }
+        .social-icons a:hover { color: #3b82f6; }
+        .copyright { font-size: 11px; color: #585e7a; line-height: 1.4; }
+        
+        .main-content { margin-left: 240px; flex: 1; padding: 30px; max-width: 900px; }
+        
+        .page-header { margin-bottom: 25px; }
+        .page-header h1 { font-size: 22px; color: #ffffff; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .page-header h1 i { color: #3b82f6; }
+        .page-header p { color: #8b92b0; font-size: 14px; }
+
+        /* ITEM FAQ ACCORDION */
+        .faq-item { background-color: #171e36; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; margin-bottom: 15px; overflow: hidden; transition: 0.3s; }
+        
+        .faq-question { padding: 20px; font-size: 15px; font-weight: 700; color: #ffffff; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .faq-question:hover { background-color: rgba(255, 255, 255, 0.02); }
+
+        .faq-icon { color: #3b82f6; font-size: 14px; transition: transform 0.3s ease; transform: rotate(-90deg); }
+        
+        .faq-answer { max-height: 0; overflow: hidden; opacity: 0; transition: all 0.3s ease-in-out; background-color: rgba(13, 18, 34, 0.3); }
+        .faq-answer p { padding: 0 20px 20px 20px; color: #8b92b0; font-size: 14px; line-height: 1.6; }
+        .faq-answer ul { padding: 0 20px 20px 40px; color: #8b92b0; font-size: 14px; line-height: 1.6; }
+
+        .faq-item.active { border-color: rgba(59, 130, 246, 0.3); }
+        .faq-item.active .faq-icon { transform: rotate(0deg); }
+        .faq-item.active .faq-answer { max-height: 500px; opacity: 1; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .faq-item.active .faq-answer p { padding-top: 15px; }
+        .faq-item.active .faq-answer ul { padding-top: 5px; }
+
+        @media (max-width: 900px) { .sidebar { width: 70px; padding: 15px 10px; } .brand span, .nav-menu span, .copyright, .sidebar-footer { display: none; } .main-content { margin-left: 70px; } }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <div class="brand"><i class="fa-solid fa-gamepad"></i><span>Arkaic TopUp</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fa-solid fa-house"></i> <span>Topup Games</span></a></li>
+                <li><a href="riwayat.html"><i class="fa-solid fa-cart-shopping"></i> <span>Riwayat Pembelian</span></a></li>
+                <li><a href="faq.html" class="active"><i class="fa-solid fa-circle-question"></i> <span>Pertanyaan Umum</span></a></li>
+                <li><a href="terms.html"><i class="fa-solid fa-file-contract"></i> <span>Syarat & Ketentuan</span></a></li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <div class="social-icons">
+                <a href="https://instagram.com/ryo_ich1" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com/@muscreslim" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://wa.me/6281286283245" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://youtube.com/@AdhiAsep" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="copyright">Copyright © 2026 Arkaic.<br>All Rights Reserved.</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1><i class="fa-solid fa-circle-question"></i> Pertanyaan Umum (FAQ)</h1>
+            <p>Temukan panduan lengkap dan jawaban spesifik mengenai transaksi di Arkaic TopUp.</p>
+        </div>
+
+        <div class="faq-container">
+            <!-- FAQ 1 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>1. Bagaimana alur lengkap transaksi top up di Arkaic?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Proses transaksi sangat cepat dan dapat dilakukan dalam 4 langkah mudah:</p>
+                    <ul>
+                        <li>Pilih game yang ingin di-top up dari halaman utama.</li>
+                        <li>Masukkan <b>User ID</b> dan <b>Zone ID / Server</b> akun game kamu dengan benar.</li>
+                        <li>Pilih item/nominal diamond serta metode pembayaran (DANA atau GoPay).</li>
+                        <li>Klik <b>Lanjut ke Pembayaran</b> dan lakukan transfer sesuai nominal sebelum batas waktu (30 menit) berakhir.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>2. Di mana saya bisa menemukan User ID dan Zone ID akun game saya?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Buka profil di dalam aplikasi game kamu:</p>
+                    <ul>
+                        <li><b>Mobile Legends:</b> Klik foto profil di pojok kiri atas. ID terletak di bawah nama karakter, contoh: <code>12345678 (2001)</code>. Angka di dalam kurung adalah Zone ID.</li>
+                        <li><b>Free Fire:</b> Klik ikon profil di kiri atas. ID berupa 10 digit angka di bawah nama akun.</li>
+                        <li><b>PUBG Mobile:</b> Buka profil akun, ID numerik (8-12 digit) dapat disalin dari samping foto profil.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>3. Berapa lama waktu yang dibutuhkan hingga item masuk ke akun?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Sistem kami bekerja secara otomatis <b>24/7</b>. Umumnya item/diamond akan langsung masuk secara instan dalam kurun waktu <b>1 hingga 3 menit</b> setelah transfer terverifikasi oleh sistem pembayaran.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>4. Bagaimana jika saya salah memasukkan User ID atau Zone ID?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Pastikan kamu memeriksa kembali ID sebelum membayar. Jika ID salah tetapi akun tersebut valid milik orang lain, pesanan akan tetap terkirim ke akun tersebut dan <b>tidak bisa dibatalkan/direfund</b>. Jika ID tidak ditemukan oleh sistem, transaksi akan tertahan dan kamu bisa menghubungi Customer Service untuk perbaikan ID.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>5. Apa saja pembayaran yang didukung dan bagaimana cara verifikasinya?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Saat ini kami mendukung pembayaran instan melalui:</p>
+                    <ul>
+                        <li><b>DANA:</b> Scan QR Code (QRIS) menggunakan aplikasi DANA.</li>
+                        <li><b>GoPay:</b> Transfer nomor ke nomor GoPay resmi kami.</li>
+                    </ul>
+                    <p>Verifikasi pembayaran terjadi secara otomatis setelah transfer kamu berhasil dikonfirmasi oleh penyedia layanan e-wallet.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>6. Apakah layanan top up di Arkaic aman dan legal?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Sangat aman 100%. Semua produk berasal dari distributor dan developer resmi game (100% legal). Kami <b>tidak pernah meminta password atau data login</b> akun kamu, cukup User ID saja.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 7 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>7. Bagaimana jika batas waktu pembayaran (timer 30 menit) habis?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Jika batas waktu habis, transaksi otomatis dianggap <b>EXPIRED / Batal</b>. Harap jangan melakukan transfer setelah waktu habis. Jika kamu terlanjur transfer setelah status expired, segera hubungi CS kami melampirkan bukti pemotongan saldo.</p>
+                </div>
+            </div>
+
+            <!-- FAQ 8 -->
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>8. Ke mana saya harus menghubungi jika butuh bantuan / pesanan kendala?</span>
+                    <i class="fa-solid fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Kamu bisa langsung menghubungi Customer Service kami melalui <b>WhatsApp Resmi</b> di sidebar kiri atau via nomor <b>+62 812-8628-3245</b> (Jam Operasional: 08:00 - 22:00 WIB).</p>
+                    <p>Format pesan untuk komplain kendala:</p>
+                    <ul>
+                        <li>Nama / User ID:</li>
+                        <li>Game:</li>
+                        <li>Tanggal Transaksi:</li>
+                        <li>Lampiran Foto/Screenshot Bukti Transfer:</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+            faqItem.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

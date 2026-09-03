@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Game - Arkaic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Default background disamakan persis dengan warna Mobile Legends */
+            --bg-color: #09101d; 
+            --card-bg: #171e36;
+            --accent-color: #3b82f6;
+            --price-color: #38bdf8;
+            --bg-image: none;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        
+        body { 
+            background-color: var(--bg-color); 
+            color: #ffffff; 
+            display: flex; 
+            min-height: 100vh;
+            transition: background-color 0.4s ease;
+        }
+        
+        /* SIDEBAR */
+        .sidebar { 
+            width: 240px; 
+            background-color: #12182d; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            border-right: 1px solid rgba(255, 255, 255, 0.05); 
+            position: fixed; 
+            height: 100vh; 
+            overflow-y: auto; 
+            z-index: 10; 
+        }
+        .brand { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 20px; 
+            font-weight: 800; 
+            color: #ffffff; 
+            margin-bottom: 30px; 
+        }
+        .brand i { 
+            color: var(--accent-color); 
+            font-size: 24px; 
+            transition: color 0.4s ease; 
+        }
+        .nav-menu { 
+            list-style: none; 
+        }
+        .nav-menu li { 
+            margin-bottom: 15px; 
+        }
+        .nav-menu a { 
+            color: #8b92b0; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            transition: 0.3s; 
+        }
+        .nav-menu a:hover, .nav-menu a.active { 
+            color: var(--accent-color); 
+        }
+        .sidebar-footer { 
+            margin-top: 30px; 
+        }
+        .social-icons { 
+            display: flex; 
+            gap: 15px; 
+            margin-bottom: 15px; 
+        }
+        .social-icons a { 
+            color: #8b92b0; 
+            font-size: 18px; 
+            transition: 0.3s; 
+        }
+        .social-icons a:hover { 
+            color: var(--accent-color); 
+        }
+        .copyright { 
+            font-size: 11px; 
+            color: #585e7a; 
+            line-height: 1.4; 
+        }
+        
+        /* MAIN CONTENT */
+        .main-content { 
+            margin-left: 240px; 
+            flex: 1; 
+            max-width: 900px;
+            position: relative;
+            min-height: 100vh;
+            background-image: var(--bg-image);
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* TOPBAR GRADASI */
+        .top-banner-bar {
+            width: 100%;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.4) 0%, rgba(13, 18, 34, 0) 100%);
+            padding: 16px 30px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 3;
+        }
+
+        /* OVERLAY TRANSPARAN HALAMAN */
+        .main-content::before {
+            content: "";
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(13, 18, 34, 0.75) 0%, rgba(13, 18, 34, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .content-inner {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+        }
+        
+        .banner-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--accent-color); 
+            border-radius: 12px; 
+            padding: 40px 20px; 
+            text-align: center; 
+            font-size: 24px; 
+            font-weight: 700; 
+            margin-bottom: 25px; 
+            text-transform: capitalize;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+        }
+        
+        .section-card { 
+            background-color: var(--card-bg); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .section-card.invalid { 
+            border-color: #ef4444; 
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); 
+        }
+        .section-title { 
+            font-size: 16px; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: var(--accent-color); 
+            transition: color 0.4s ease; 
+        }
+        
+        /* INPUT STYLES */
+        .input-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
+        .input-row { 
+            display: flex; 
+            gap: 15px; 
+        }
+        .input-group input, .wa-prefix { 
+            background: #0d1222; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 8px; 
+            padding: 12px 15px; 
+            color: white; 
+            font-size: 14px; 
+            outline: none; 
+            transition: 0.3s; 
+            width: 100%;
+        }
+        .input-group input:focus, .wa-prefix:focus { 
+            border-color: var(--accent-color); 
+        }
+        .input-group input.error { 
+            border-color: #ef4444; 
+            background-color: rgba(239, 68, 68, 0.05); 
+        }
+
+        /* WRAPPER KODE NEGARA & INPUT WA */
+        .wa-input-group { 
+            display: flex; 
+            gap: 8px; 
+        }
+        .wa-prefix { 
+            cursor: pointer; 
+            font-weight: 600; 
+            padding: 12px 10px; 
+            max-width: 130px; 
+        }
+        .wa-prefix option { 
+            background: #171e36; 
+            color: white; 
+        }
+        .wa-input-group input { 
+            flex: 1; 
+        }
+        
+        .grid-options { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 15px; 
+        }
+        .option-item { 
+            background: #0d1222; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 8px; 
+            padding: 15px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        .option-item:hover, .option-item.selected { 
+            border-color: var(--accent-color); 
+            background: rgba(255, 255, 255, 0.05); 
+            box-shadow: 0 0 12px var(--accent-color); 
+        }
+        .option-title { 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-bottom: 5px; 
+        }
+        .option-price { 
+            font-size: 12px; 
+            color: var(--price-color); 
+            transition: color 0.4s ease; 
+        }
+        
+        .error-message { 
+            color: #ef4444; 
+            font-size: 13px; 
+            margin-top: 12px; 
+            display: none; 
+            align-items: center; 
+            gap: 6px; 
+            font-weight: 500; 
+        }
+        .error-message i { 
+            font-size: 14px; 
+        }
+
+        .btn-submit { 
+            display: block; 
+            width: 100%; 
+            background: var(--accent-color); 
+            color: white; 
+            text-align: center; 
+            text-decoration: none; 
+            padding: 14px; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            font-size: 15px; 
+            transition: 0.3s; 
+            border: none; 
+            cursor: pointer; 
+            margin-top: 10px; 
+        }
+        .btn-submit:hover { 
+            filter: brightness(1.2); 
+        }
+
+        @media (max-width: 900px) { 
+            .sidebar { 
+                width: 70px; 
+                padding: 15px 10px; 
+            } 
+            .brand span, .nav-menu span, .copyright, .sidebar-footer { 
+                display: none; 
+            } 
+            .main-content { 
+                margin-left: 70px; 
+            } 
+            .input-row { 
+                flex-direction: column; 
+            } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <div class="brand"><i class="fa-solid fa-gamepad"></i><span>Arkaic TopUp</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> <span>Topup Games</span></a></li>
+                <li><a href="riwayat.html"><i class="fa-solid fa-cart-shopping"></i> <span>Riwayat Pembelian</span></a></li>
+                <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> <span>Pertanyaan Umum</span></a></li>
+                <li><a href="terms.html"><i class="fa-solid fa-file-contract"></i> <span>Syarat & Ketentuan</span></a></li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <div class="social-icons">
+                <a href="https://instagram.com/ryo_ich1" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com/@muscreslim" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://wa.me/6281286283245" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://youtube.com/@AdhiAsep" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="copyright">Copyright © 2026 Arkaic.<br>All Rights Reserved.</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- BAR GRADASI ATAS -->
+        <div class="top-banner-bar">
+            INSTANT TOP UP! INSTANT PLAY!
+        </div>
+
+        <div class="content-inner">
+            <div class="banner-card" id="gameTitle">
+                Loading Game...
+            </div>
+
+            <!-- SECTION 1: USER DATA -->
+            <div class="section-card" id="cardAccount">
+                <div class="section-title"><i class="fa-solid fa-user"></i> 1. Masukkan Data Akun</div>
+                <div class="input-group" id="accountInputGroup">
+                    <!-- Form Di-render via JS -->
+                </div>
+                <div class="error-message" id="errorAccount">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Harap isi semua data akun dengan benar!
+                </div>
+            </div>
+
+            <!-- SECTION 2: NOMINAL -->
+            <div class="section-card" id="cardNominal">
+                <div class="section-title"><i class="fa-solid fa-gem"></i> 2. Pilih Nominal Top Up</div>
+                <div class="grid-options" id="nominalGroup">
+                    <!-- Dynamic Nominal -->
+                </div>
+                <div class="error-message" id="errorNominal">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Silakan pilih nominal top up terlebih dahulu!
+                </div>
+            </div>
+
+            <!-- SECTION 3: METODE PEMBAYARAN -->
+            <div class="section-card" id="cardPayment">
+                <div class="section-title"><i class="fa-solid fa-wallet"></i> 3. Pilih Metode Pembayaran</div>
+                <div class="grid-options" id="paymentGroup">
+                    <div class="option-item" data-method="DANA" onclick="selectOption(this, 'paymentGroup')">
+                        <div class="option-title">DANA</div>
+                        <div class="option-price">Transfer QR</div>
+                    </div>
+                    <div class="option-item" data-method="GoPay" onclick="selectOption(this, 'paymentGroup')">
+                        <div class="option-title">GoPay</div>
+                        <div class="option-price">Transfer Nomor</div>
+                    </div>
+                </div>
+                <div class="error-message" id="errorPayment">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Silakan pilih metode pembayaran terlebih dahulu!
+                </div>
+            </div>
+
+            <button onclick="goToPayment()" class="btn-submit"><i class="fa-solid fa-arrow-right"></i> Lanjut ke Pembayaran</button>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameSlug = urlParams.get('slug') || 'mobile-legends';
+        
+        // WARNA BACKGROUND UTAMA DISAMAKAN DENGAN MOBILE LEGENDS (#09101d) UNTUK SEMUA GAME
+        const mlBgColor = '#09101d';
+        const defaultTopGradient = 'linear-gradient(180deg, rgba(59, 130, 246, 0.4) 0%, rgba(13, 18, 34, 0) 100%)';
+
+        const gameThemes = {
+            'mobile-legends': {
+                name: 'Mobile Legends: Bang Bang',
+                bgColor: mlBgColor,
+                cardBg: '#121c33',
+                accentColor: '#3b82f6',
+                priceColor: '#60a5fa',
+                bgImage: 'url("https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'free-fire': {
+                name: 'Free Fire',
+                bgColor: mlBgColor, // Disamakan dengan Mobile Legends
+                cardBg: '#2a1410',
+                accentColor: '#f97316',
+                priceColor: '#fb923c',
+                bgImage: 'url("https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'pubg-mobile': {
+                name: 'PUBG Mobile',
+                bgColor: mlBgColor, // Disamakan dengan Mobile Legends
+                cardBg: '#172418',
+                accentColor: '#10b981',
+                priceColor: '#34d399',
+                bgImage: 'url("https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'roblox': {
+                name: 'Roblox',
+                bgColor: mlBgColor, // Disamakan dengan Mobile Legends
+                cardBg: '#2e1420',
+                accentColor: '#ef4444',
+                priceColor: '#f87171',
+                bgImage: 'url("https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?q=80&w=1200&auto=format&fit=crop")'
+            }
+        };
+
+        const gameProducts = {
+            'mobile-legends': [
+                { item: '44 Diamonds', price: 'Rp 11.500' },
+                { item: '86 Diamonds', price: 'Rp 21.000' },
+                { item: '172 Diamonds', price: 'Rp 42.000' },
+                { item: '257 Diamonds', price: 'Rp 63.000' },
+                { item: '706 Diamonds', price: 'Rp 168.000' },
+                { item: 'Weekly Diamond Pass', price: 'Rp 27.500' }
+            ],
+            'free-fire': [
+                { item: '50 Diamonds', price: 'Rp 8.000' },
+                { item: '70 Diamonds', price: 'Rp 10.000' },
+                { item: '140 Diamonds', price: 'Rp 19.000' },
+                { item: '355 Diamonds', price: 'Rp 47.000' },
+                { item: '720 Diamonds', price: 'Rp 94.000' },
+                { item: 'Membership Mingguan', price: 'Rp 29.000' }
+            ],
+            'pubg-mobile': [
+                { item: '60 UC', price: 'Rp 14.500' },
+                { item: '325 UC', price: 'Rp 72.000' },
+                { item: '660 UC', price: 'Rp 143.000' },
+                { item: '1800 UC', price: 'Rp 360.000' },
+                { item: '3850 UC', price: 'Rp 720.000' }
+            ],
+            'roblox': [
+                { item: '80 Robux', price: 'Rp 16.000' },
+                { item: '400 Robux', price: 'Rp 75.000' },
+                { item: '800 Robux', price: 'Rp 145.000' },
+                { item: '1700 Robux', price: 'Rp 300.000' },
+                { item: '4500 Robux', price: 'Rp 750.000' }
+            ]
+        };
+
+        const currentConfig = gameThemes[gameSlug] || gameThemes['mobile-legends'];
+        
+        // Terapkan warna background body & variabel CSS
+        document.documentElement.style.setProperty('--bg-color', currentConfig.bgColor);
+        document.documentElement.style.setProperty('--card-bg', currentConfig.cardBg);
+        document.documentElement.style.setProperty('--accent-color', currentConfig.accentColor);
+        document.documentElement.style.setProperty('--price-color', currentConfig.priceColor);
+        document.documentElement.style.setProperty('--bg-image', currentConfig.bgImage);
+
+        // Gradasi bar atas selalu memakai gradasi Mobile Legends
+        document.querySelector('.top-banner-bar').style.background = defaultTopGradient;
+
+        document.getElementById('gameTitle').innerText = currentConfig.name;
+
+        // LOGIKA DINAMIS INPUT AKUN
+        const accountGroup = document.getElementById('accountInputGroup');
+
+        if (gameSlug === 'roblox') {
+            accountGroup.innerHTML = `
+                <div class="input-row">
+                    <input type="text" id="usernameInput" placeholder="Username Roblox" oninput="clearError('Account')">
+                    <input type="password" id="passwordInput" placeholder="Password Roblox" oninput="clearError('Account')">
+                </div>
+                <div class="wa-input-group">
+                    <select id="countryCode" class="wa-prefix">
+                        <option value="+62">🇮🇩 +62</option>
+                        <option value="+60">🇲🇾 +60</option>
+                        <option value="+65">🇸🇬 +65</option>
+                        <option value="+1">🇺🇸 +1</option>
+                        <option value="+44">🇬🇧 +44</option>
+                        <option value="+61">🇦🇺 +61</option>
+                        <option value="+81">🇯🇵 +81</option>
+                        <option value="+82">🇰🇷 +82</option>
+                        <option value="+63">🇵🇭 +63</option>
+                        <option value="+66">🇹🇭 +66</option>
+                        <option value="+84">🇻🇳 +84</option>
+                        <option value="+966">🇸🇦 +966</option>
+                        <option value="+971">🇦🇪 +971</option>
+                        <option value="+91">🇮🇳 +91</option>
+                        <option value="+86">🇨🇳 +86</option>
+                        <option value="+7">🇷🇺 +7</option>
+                        <option value="+55">🇧🇷 +55</option>
+                        <option value="+49">🇩🇪 +49</option>
+                        <option value="+33">🇫🇷 +33</option>
+                    </select>
+                    <input type="number" id="waInput" placeholder="No. WhatsApp (Aktif)" oninput="clearError('Account')">
+                </div>
+            `;
+        } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile') {
+            accountGroup.innerHTML = `
+                <input type="text" id="userIdInput" placeholder="Masukkan User ID" oninput="clearError('Account')">
+            `;
+        } else {
+            // Mobile Legends (Default)
+            accountGroup.innerHTML = `
+                <div class="input-row">
+                    <input type="text" id="userIdInput" placeholder="Masukkan User ID" oninput="clearError('Account')">
+                    <input type="text" id="zoneIdInput" placeholder="Masukkan Zone ID">
+                </div>
+            `;
+        }
+
+        // RENDER NOMINAL
+        const nominalContainer = document.getElementById('nominalGroup');
+        const products = gameProducts[gameSlug] || gameProducts['mobile-legends'];
+        
+        products.forEach(prod => {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+            div.setAttribute('data-item', prod.item);
+            div.setAttribute('data-price', prod.price);
+            div.onclick = function() { selectOption(this, 'nominalGroup'); };
+            
+            div.innerHTML = `
+                <div class="option-title">${prod.item}</div>
+                <div class="option-price">${prod.price}</div>
+            `;
+            nominalContainer.appendChild(div);
+        });
+
+        let selectedItem = null;
+        let selectedPrice = null;
+        let selectedPaymentMethod = null;
+
+        function selectOption(element, groupId) {
+            const container = document.getElementById(groupId);
+            const items = container.getElementsByClassName('option-item');
+            for (let item of items) {
+                item.classList.remove('selected');
+            }
+            element.classList.add('selected');
+
+            if (groupId === 'nominalGroup') {
+                selectedItem = element.getAttribute('data-item');
+                selectedPrice = element.getAttribute('data-price');
+                clearError('Nominal');
+            }
+
+            if (groupId === 'paymentGroup') {
+                selectedPaymentMethod = element.getAttribute('data-method');
+                clearError('Payment');
+            }
+        }
+
+        function clearError(sectionKey) {
+            document.getElementById('card' + sectionKey).classList.remove('invalid');
+            document.getElementById('error' + sectionKey).style.display = 'none';
+        }
+
+        function goToPayment() {
+            let userParamData = "";
+            let isValid = true;
+
+            if (gameSlug === 'roblox') {
+                const username = document.getElementById('usernameInput').value.trim();
+                const password = document.getElementById('passwordInput').value.trim();
+                const code = document.getElementById('countryCode').value;
+                let waNumber = document.getElementById('waInput').value.trim();
+
+                if (waNumber.startsWith('0')) {
+                    waNumber = waNumber.substring(1);
+                }
+
+                if (!username || !password || !waNumber) {
+                    isValid = false;
+                } else {
+                    userParamData = `User: ${username} | WA: ${code}${waNumber}`;
+                }
+            } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile') {
+                const userId = document.getElementById('userIdInput').value.trim();
+                if (!userId) {
+                    isValid = false;
+                } else {
+                    userParamData = userId;
+                }
+            } else { // Mobile Legends
+                const userId = document.getElementById('userIdInput').value.trim();
+                const zoneId = document.getElementById('zoneIdInput') ? document.getElementById('zoneIdInput').value.trim() : '';
+                if (!userId) {
+                    isValid = false;
+                } else {
+                    userParamData = zoneId ? `${userId} (${zoneId})` : userId;
+                }
+            }
+
+            if (!isValid) {
+                document.getElementById('cardAccount').classList.add('invalid');
+                document.getElementById('errorAccount').style.display = 'flex';
+            }
+
+            if (!selectedItem || !selectedPrice) {
+                document.getElementById('cardNominal').classList.add('invalid');
+                document.getElementById('errorNominal').style.display = 'flex';
+                isValid = false;
+            }
+
+            if (!selectedPaymentMethod) {
+                document.getElementById('cardPayment').classList.add('invalid');
+                document.getElementById('errorPayment').style.display = 'flex';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            const targetUrl = `bayar.html?game=${encodeURIComponent(currentConfig.name)}&item=${encodeURIComponent(selectedItem)}&price=${encodeURIComponent(selectedPrice)}&method=${encodeURIComponent(selectedPaymentMethod)}&user=${encodeURIComponent(userParamData)}`;
+            window.location.href = targetUrl;
+        }
+    </script>
+</body>
+</html>

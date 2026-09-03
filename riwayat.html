@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pembelian - Arkaic</title>
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0d1222;
+            color: #ffffff;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR KIRI --- */
+        .sidebar {
+            width: 240px;
+            background-color: #12182d;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand i {
+            color: #3b82f6;
+            font-size: 24px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 15px;
+        }
+
+        .nav-menu a {
+            color: #8b92b0;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #3b82f6;
+        }
+
+        .sidebar-footer {
+            margin-top: 30px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .social-icons a {
+            color: #8b92b0;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #3b82f6;
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: #585e7a;
+            line-height: 1.4;
+        }
+
+        /* --- KONTEN UTAMA --- */
+        .main-content {
+            margin-left: 240px;
+            flex: 1;
+            padding: 30px;
+            max-width: 1000px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title i {
+            color: #3b82f6;
+        }
+
+        /* --- CARD SEARCH --- */
+        .search-card {
+            background-color: #171e36;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .search-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            background-color: #0d1222;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #3b82f6;
+        }
+
+        .search-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-btn:hover {
+            background-color: #2563eb;
+        }
+
+        /* --- TABEL --- */
+        .table-container {
+            background-color: #171e36;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #12182d;
+            color: #8b92b0;
+            padding: 14px 20px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* BADGE STATUS */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-pending {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-failed {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* RESPONSIVE LAYAR KECIL */
+        @media (max-width: 900px) {
+            .sidebar { width: 70px; padding: 15px 10px; }
+            .brand span, .nav-menu span, .copyright, .sidebar-footer { display: none; }
+            .main-content { margin-left: 70px; }
+            .table-container { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR KIRI -->
+    <div class="sidebar">
+        <div>
+            <div class="brand">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>Arkaic TopUp</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fa-solid fa-house"></i> <span>Topup Games</span></a></li>
+                <li><a href="riwayat.html" class="active"><i class="fa-solid fa-cart-shopping"></i> <span>Riwayat Pembelian</span></a></li>
+                <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> <span>Pertanyaan Umum</span></a></li>
+                <li><a href="terms.html"><i class="fa-solid fa-file-contract"></i> <span>Syarat & Ketentuan</span></a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="social-icons">
+                <a href="https://instagram.com/ryo_ich1" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com/@muscreslim" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://wa.me/6281286283245" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://youtube.com/@AdhiAsep" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                Copyright © 2026 Arkaic.<br>All Rights Reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembelian</h1>
+        </div>
+
+        <div class="search-card">
+            <h3>Cari Invoice Pembelian</h3>
+            <p style="color: #8b92b0; font-size: 13px; margin-top: 4px;">Masukkan No. Transaksi / Nomor HP untuk mengecek status pesanan kamu.</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Contoh: ARK-20260902-001">
+                <button class="search-btn" onclick="searchInvoice()"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="historyTable">
+                <thead>
+                    <tr>
+                        <th>No. Invoice</th>
+                        <th>Game</th>
+                        <th>Item</th>
+                        <th>Tujuan (ID)</th>
+                        <th>Harga</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ARK-20260902-001</strong></td>
+                        <td>Mobile Legends</td>
+                        <td>86 Diamonds</td>
+                        <td>12345678 (2022)</td>
+                        <td>Rp22.000</td>
+                        <td><span class="status-badge status-success">Berhasil</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>ARK-20260901-089</strong></td>
+                        <td>Free Fire</td>
+                        <td>140 Diamonds</td>
+                        <td>987654321</td>
+                        <td>Rp19.500</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>ARK-20260830-045</strong></td>
+                        <td>PUBG Mobile</td>
+                        <td>60 UC</td>
+                        <td>512345678</td>
+                        <td>Rp14.000</td>
+                        <td><span class="status-badge status-failed">Gagal</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- LOGIKA JAVASCRIPT UNTUK PENCARIAN -->
+    <script>
+        function searchInvoice() {
+            let input = document.getElementById("searchInput").value.toUpperCase();
+            let table = document.getElementById("historyTable");
+            let tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let textContent = tr[i].textContent || tr[i].innerText;
+                if (textContent.toUpperCase().indexOf(input) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+        // Jalankan pencarian otomatis saat mengetik
+        document.getElementById("searchInput").addEventListener("keyup", searchInvoice);
+    </script>
+</body>
+</html>
