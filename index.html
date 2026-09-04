@@ -96,7 +96,6 @@
             font-size: 14px;
             font-weight: 500;
             transition: all 0.3s;
-            cursor: pointer;
         }
 
         .nav-menu a:hover, .nav-menu a.active {
@@ -248,8 +247,7 @@
                 <li><a href="riwayat.html"><i class="fa-solid fa-cart-shopping"></i> <span>Riwayat Pembelian</span></a></li>
                 <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> <span>Pertanyaan Umum</span></a></li>
                 <li><a href="terms.html"><i class="fa-solid fa-file-contract"></i> <span>Syarat & Ketentuan</span></a></li>
-                <!-- LOGIN ADMIN BER-PASSWORD -->
-                <li><a onclick="loginAdmin()"><i class="fa-solid fa-user-gear"></i> <span>Admin Panel</span></a></li>
+                <li><a href="admin.html"><i class="fa-solid fa-user-gear"></i> <span>Admin Panel</span></a></li>
             </ul>
         </div>
 
@@ -299,19 +297,8 @@
         </div>
     </div>
 
+    <!-- SCRIPT UNTUK LOAD GAME DARIN ADMIN PANEL -->
     <script>
-        // 1. SISTEM LOGIN ADMIN PASSWORD
-        function loginAdmin() {
-            const password = prompt("Masukkan Password Admin:");
-            // Ganti 'admin123' dengan password rahasia yang kamu inginkan
-            if (password === "admin123") {
-                window.location.href = "admin.html";
-            } else if (password !== null) {
-                alert("Password Salah! Akses ditolak.");
-            }
-        }
-
-        // 2. MEMUAT GAME SISA DARI ADMIN PANEL
         function loadAdminGames() {
             const gamesGrid = document.getElementById('gamesGrid');
             const customGames = JSON.parse(localStorage.getItem('customGames')) || [];
@@ -328,6 +315,7 @@
             });
         }
 
+        // Panggil fungsi saat halaman selesai dimuat
         document.addEventListener('DOMContentLoaded', loadAdminGames);
     </script>
 </body>
