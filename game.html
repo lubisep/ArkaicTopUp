@@ -195,7 +195,7 @@
             display: flex; 
             gap: 15px; 
         }
-        .input-group input, .wa-prefix { 
+        .input-group input, .input-group select, .wa-prefix { 
             background: #0d1222; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             border-radius: 8px; 
@@ -206,7 +206,7 @@
             transition: 0.3s; 
             width: 100%;
         }
-        .input-group input:focus, .wa-prefix:focus { 
+        .input-group input:focus, .input-group select:focus, .wa-prefix:focus { 
             border-color: var(--accent-color); 
         }
         .input-group input.error { 
@@ -375,11 +375,27 @@
                 <div class="grid-options" id="paymentGroup">
                     <div class="option-item" data-method="DANA" onclick="selectOption(this, 'paymentGroup')">
                         <div class="option-title">DANA</div>
-                        <div class="option-price">Transfer QR</div>
+                        <div class="option-price">Transfer QR / Nomor</div>
                     </div>
                     <div class="option-item" data-method="GoPay" onclick="selectOption(this, 'paymentGroup')">
                         <div class="option-title">GoPay</div>
-                        <div class="option-price">Transfer Nomor</div>
+                        <div class="option-price">Transfer QR / Nomor</div>
+                    </div>
+                    <div class="option-item" data-method="OVO" onclick="selectOption(this, 'paymentGroup')">
+                        <div class="option-title">OVO</div>
+                        <div class="option-price">E-Wallet Instant</div>
+                    </div>
+                    <div class="option-item" data-method="ShopeePay" onclick="selectOption(this, 'paymentGroup')">
+                        <div class="option-title">ShopeePay</div>
+                        <div class="option-price">E-Wallet Instant</div>
+                    </div>
+                    <div class="option-item" data-method="QRIS" onclick="selectOption(this, 'paymentGroup')">
+                        <div class="option-title">QRIS All Payment</div>
+                        <div class="option-price">BCA, Mandiri, BRI, DLL</div>
+                    </div>
+                    <div class="option-item" data-method="Virtual Account" onclick="selectOption(this, 'paymentGroup')">
+                        <div class="option-title">Bank Transfer / VA</div>
+                        <div class="option-price">Verifikasi Otomatis</div>
                     </div>
                 </div>
                 <div class="error-message" id="errorPayment">
@@ -410,7 +426,7 @@
             },
             'free-fire': {
                 name: 'Free Fire',
-                bgColor: mlBgColor, // Disamakan dengan Mobile Legends
+                bgColor: mlBgColor,
                 cardBg: '#2a1410',
                 accentColor: '#f97316',
                 priceColor: '#fb923c',
@@ -418,7 +434,7 @@
             },
             'pubg-mobile': {
                 name: 'PUBG Mobile',
-                bgColor: mlBgColor, // Disamakan dengan Mobile Legends
+                bgColor: mlBgColor,
                 cardBg: '#172418',
                 accentColor: '#10b981',
                 priceColor: '#34d399',
@@ -426,11 +442,51 @@
             },
             'roblox': {
                 name: 'Roblox',
-                bgColor: mlBgColor, // Disamakan dengan Mobile Legends
+                bgColor: mlBgColor,
                 cardBg: '#2e1420',
                 accentColor: '#ef4444',
                 priceColor: '#f87171',
                 bgImage: 'url("https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'genshin-impact': {
+                name: 'Genshin Impact',
+                bgColor: mlBgColor,
+                cardBg: '#14233c',
+                accentColor: '#38bdf8',
+                priceColor: '#7dd3fc',
+                bgImage: 'url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'honkai-star-rail': {
+                name: 'Honkai: Star Rail',
+                bgColor: mlBgColor,
+                cardBg: '#1e1b38',
+                accentColor: '#a855f7',
+                priceColor: '#c084fc',
+                bgImage: 'url("https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'valorant': {
+                name: 'Valorant',
+                bgColor: mlBgColor,
+                cardBg: '#2d151e',
+                accentColor: '#f43f5e',
+                priceColor: '#fb7185',
+                bgImage: 'url("https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'codm': {
+                name: 'Call of Duty: Mobile',
+                bgColor: mlBgColor,
+                cardBg: '#242014',
+                accentColor: '#eab308',
+                priceColor: '#fde047',
+                bgImage: 'url("https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'ea-fc-mobile': {
+                name: 'EA Sports FC Mobile',
+                bgColor: mlBgColor,
+                cardBg: '#102820',
+                accentColor: '#22c55e',
+                priceColor: '#4ade80',
+                bgImage: 'url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200&auto=format&fit=crop")'
             }
         };
 
@@ -464,6 +520,42 @@
                 { item: '800 Robux', price: 'Rp 145.000' },
                 { item: '1700 Robux', price: 'Rp 300.000' },
                 { item: '4500 Robux', price: 'Rp 750.000' }
+            ],
+            'genshin-impact': [
+                { item: '60 Genesis Crystals', price: 'Rp 16.000' },
+                { item: '300+30 Genesis Crystals', price: 'Rp 79.000' },
+                { item: '980+110 Genesis Crystals', price: 'Rp 245.000' },
+                { item: '1980+260 Genesis Crystals', price: 'Rp 479.000' },
+                { item: 'Blessing of the Welkin Moon', price: 'Rp 79.000' }
+            ],
+            'honkai-star-rail': [
+                { item: '60 Oneiric Shard', price: 'Rp 16.000' },
+                { item: '300+30 Oneiric Shard', price: 'Rp 79.000' },
+                { item: '980+110 Oneiric Shard', price: 'Rp 245.000' },
+                { item: '1980+260 Oneiric Shard', price: 'Rp 479.000' },
+                { item: 'Express Supply Pass', price: 'Rp 79.000' }
+            ],
+            'valorant': [
+                { item: '475 Valorant Points', price: 'Rp 55.000' },
+                { item: '1000 Valorant Points', price: 'Rp 110.000' },
+                { item: '2050 Valorant Points', price: 'Rp 220.000' },
+                { item: '3650 Valorant Points', price: 'Rp 380.000' },
+                { item: '5350 Valorant Points', price: 'Rp 540.000' }
+            ],
+            'codm': [
+                { item: '31 CP', price: 'Rp 5.000' },
+                { item: '63 CP', price: 'Rp 10.000' },
+                { item: '128 CP', price: 'Rp 20.000' },
+                { item: '320 CP', price: 'Rp 50.000' },
+                { item: '645 CP', price: 'Rp 100.000' },
+                { item: 'Battle Pass Slim', price: 'Rp 59.000' }
+            ],
+            'ea-fc-mobile': [
+                { item: '100 FC Points', price: 'Rp 16.000' },
+                { item: '520 FC Points', price: 'Rp 79.000' },
+                { item: '1070 FC Points', price: 'Rp 159.000' },
+                { item: '2200 FC Points', price: 'Rp 319.000' },
+                { item: 'Silver Star Pass', price: 'Rp 149.000' }
             ]
         };
 
@@ -481,7 +573,7 @@
 
         document.getElementById('gameTitle').innerText = currentConfig.name;
 
-        // LOGIKA DINAMIS INPUT AKUN
+        // LOGIKA DINAMIS INPUT AKUN UNTUK SEMUA 9 GAME
         const accountGroup = document.getElementById('accountInputGroup');
 
         if (gameSlug === 'roblox') {
@@ -515,9 +607,30 @@
                     <input type="number" id="waInput" placeholder="No. WhatsApp (Aktif)" oninput="clearError('Account')">
                 </div>
             `;
-        } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile') {
+        } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile' || gameSlug === 'codm') {
             accountGroup.innerHTML = `
-                <input type="text" id="userIdInput" placeholder="Masukkan User ID" oninput="clearError('Account')">
+                <input type="text" id="userIdInput" placeholder="Masukkan User ID ${currentConfig.name}" oninput="clearError('Account')">
+            `;
+        } else if (gameSlug === 'genshin-impact' || gameSlug === 'honkai-star-rail') {
+            accountGroup.innerHTML = `
+                <div class="input-row">
+                    <input type="text" id="userIdInput" placeholder="Masukkan User ID (UID)" oninput="clearError('Account')">
+                    <select id="serverInput" onchange="clearError('Account')">
+                        <option value="">-- Pilih Server --</option>
+                        <option value="Asia">Asia</option>
+                        <option value="America">America</option>
+                        <option value="Europe">Europe</option>
+                        <option value="TW_HK_MO">TW, HK, MO</option>
+                    </select>
+                </div>
+            `;
+        } else if (gameSlug === 'valorant') {
+            accountGroup.innerHTML = `
+                <input type="text" id="userIdInput" placeholder="Riot ID + Tagline (Contoh: Username#1234)" oninput="clearError('Account')">
+            `;
+        } else if (gameSlug === 'ea-fc-mobile') {
+            accountGroup.innerHTML = `
+                <input type="text" id="userIdInput" placeholder="Masukkan UID EA FC Mobile" oninput="clearError('Account')">
             `;
         } else {
             // Mobile Legends (Default)
@@ -595,7 +708,15 @@
                 } else {
                     userParamData = `User: ${username} | WA: ${code}${waNumber}`;
                 }
-            } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile') {
+            } else if (gameSlug === 'genshin-impact' || gameSlug === 'honkai-star-rail') {
+                const userId = document.getElementById('userIdInput').value.trim();
+                const server = document.getElementById('serverInput').value;
+                if (!userId || !server) {
+                    isValid = false;
+                } else {
+                    userParamData = `${userId} (${server})`;
+                }
+            } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile' || gameSlug === 'codm' || gameSlug === 'valorant' || gameSlug === 'ea-fc-mobile') {
                 const userId = document.getElementById('userIdInput').value.trim();
                 if (!userId) {
                     isValid = false;
