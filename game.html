@@ -225,7 +225,7 @@
             padding: 12px 10px; 
             max-width: 130px; 
         }
-        .wa-prefix option { 
+        .wa-prefix option, .input-group select option { 
             background: #171e36; 
             color: white; 
         }
@@ -375,27 +375,11 @@
                 <div class="grid-options" id="paymentGroup">
                     <div class="option-item" data-method="DANA" onclick="selectOption(this, 'paymentGroup')">
                         <div class="option-title">DANA</div>
-                        <div class="option-price">Transfer QR / Nomor</div>
+                        <div class="option-price">Transfer QR</div>
                     </div>
                     <div class="option-item" data-method="GoPay" onclick="selectOption(this, 'paymentGroup')">
                         <div class="option-title">GoPay</div>
-                        <div class="option-price">Transfer QR / Nomor</div>
-                    </div>
-                    <div class="option-item" data-method="OVO" onclick="selectOption(this, 'paymentGroup')">
-                        <div class="option-title">OVO</div>
-                        <div class="option-price">E-Wallet Instant</div>
-                    </div>
-                    <div class="option-item" data-method="ShopeePay" onclick="selectOption(this, 'paymentGroup')">
-                        <div class="option-title">ShopeePay</div>
-                        <div class="option-price">E-Wallet Instant</div>
-                    </div>
-                    <div class="option-item" data-method="QRIS" onclick="selectOption(this, 'paymentGroup')">
-                        <div class="option-title">QRIS All Payment</div>
-                        <div class="option-price">BCA, Mandiri, BRI, DLL</div>
-                    </div>
-                    <div class="option-item" data-method="Virtual Account" onclick="selectOption(this, 'paymentGroup')">
-                        <div class="option-title">Bank Transfer / VA</div>
-                        <div class="option-price">Verifikasi Otomatis</div>
+                        <div class="option-price">Transfer Nomor</div>
                     </div>
                 </div>
                 <div class="error-message" id="errorPayment">
@@ -409,7 +393,9 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const gameSlug = urlParams.get('slug') || 'mobile-legends';
+        let rawSlug = urlParams.get('slug') || 'mobile-legends';
+        // Normalisasi slug
+        const gameSlug = rawSlug.toLowerCase().trim();
         
         // WARNA BACKGROUND UTAMA DISAMAKAN DENGAN MOBILE LEGENDS (#09101d) UNTUK SEMUA GAME
         const mlBgColor = '#09101d';
@@ -448,10 +434,11 @@
                 priceColor: '#f87171',
                 bgImage: 'url("https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?q=80&w=1200&auto=format&fit=crop")'
             },
+            // TEMA GAME TAMBAHAN
             'genshin-impact': {
                 name: 'Genshin Impact',
                 bgColor: mlBgColor,
-                cardBg: '#14233c',
+                cardBg: '#1a1f38',
                 accentColor: '#38bdf8',
                 priceColor: '#7dd3fc',
                 bgImage: 'url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200&auto=format&fit=crop")'
@@ -459,34 +446,34 @@
             'honkai-star-rail': {
                 name: 'Honkai: Star Rail',
                 bgColor: mlBgColor,
-                cardBg: '#1e1b38',
+                cardBg: '#1e1b3a',
                 accentColor: '#a855f7',
                 priceColor: '#c084fc',
-                bgImage: 'url("https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1200&auto=format&fit=crop")'
+                bgImage: 'url("https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop")'
             },
-            'valorant': {
-                name: 'Valorant',
+            'bloodstrike': {
+                name: 'BloodStrike',
                 bgColor: mlBgColor,
-                cardBg: '#2d151e',
-                accentColor: '#f43f5e',
-                priceColor: '#fb7185',
+                cardBg: '#2d1115',
+                accentColor: '#dc2626',
+                priceColor: '#f87171',
                 bgImage: 'url("https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop")'
             },
-            'codm': {
-                name: 'Call of Duty: Mobile',
+            'efootball': {
+                name: 'eFootball 2026',
                 bgColor: mlBgColor,
-                cardBg: '#242014',
-                accentColor: '#eab308',
-                priceColor: '#fde047',
-                bgImage: 'url("https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1200&auto=format&fit=crop")'
-            },
-            'ea-fc-mobile': {
-                name: 'EA Sports FC Mobile',
-                bgColor: mlBgColor,
-                cardBg: '#102820',
+                cardBg: '#0f291e',
                 accentColor: '#22c55e',
                 priceColor: '#4ade80',
                 bgImage: 'url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200&auto=format&fit=crop")'
+            },
+            'honor-of-kings': {
+                name: 'Honor of Kings',
+                bgColor: mlBgColor,
+                cardBg: '#2c220f',
+                accentColor: '#eab308',
+                priceColor: '#fde047',
+                bgImage: 'url("https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?q=80&w=1200&auto=format&fit=crop")'
             }
         };
 
@@ -521,45 +508,52 @@
                 { item: '1700 Robux', price: 'Rp 300.000' },
                 { item: '4500 Robux', price: 'Rp 750.000' }
             ],
+            // PRODUK GAME TAMBAHAN
             'genshin-impact': [
                 { item: '60 Genesis Crystals', price: 'Rp 16.000' },
                 { item: '300+30 Genesis Crystals', price: 'Rp 79.000' },
-                { item: '980+110 Genesis Crystals', price: 'Rp 245.000' },
+                { item: '980+110 Genesis Crystals', price: 'Rp 249.000' },
                 { item: '1980+260 Genesis Crystals', price: 'Rp 479.000' },
                 { item: 'Blessing of the Welkin Moon', price: 'Rp 79.000' }
             ],
             'honkai-star-rail': [
                 { item: '60 Oneiric Shard', price: 'Rp 16.000' },
                 { item: '300+30 Oneiric Shard', price: 'Rp 79.000' },
-                { item: '980+110 Oneiric Shard', price: 'Rp 245.000' },
+                { item: '980+110 Oneiric Shard', price: 'Rp 249.000' },
                 { item: '1980+260 Oneiric Shard', price: 'Rp 479.000' },
                 { item: 'Express Supply Pass', price: 'Rp 79.000' }
             ],
-            'valorant': [
-                { item: '475 Valorant Points', price: 'Rp 55.000' },
-                { item: '1000 Valorant Points', price: 'Rp 110.000' },
-                { item: '2050 Valorant Points', price: 'Rp 220.000' },
-                { item: '3650 Valorant Points', price: 'Rp 380.000' },
-                { item: '5350 Valorant Points', price: 'Rp 540.000' }
+            'bloodstrike': [
+                { item: '100 Gold', price: 'Rp 15.000' },
+                { item: '500+50 Gold', price: 'Rp 75.000' },
+                { item: '1000+120 Gold', price: 'Rp 149.000' },
+                { item: '2000+300 Gold', price: 'Rp 299.000' },
+                { item: 'Strike Pass Elite', price: 'Rp 49.000' }
             ],
-            'codm': [
-                { item: '31 CP', price: 'Rp 5.000' },
-                { item: '63 CP', price: 'Rp 10.000' },
-                { item: '128 CP', price: 'Rp 20.000' },
-                { item: '320 CP', price: 'Rp 50.000' },
-                { item: '645 CP', price: 'Rp 100.000' },
-                { item: 'Battle Pass Slim', price: 'Rp 59.000' }
+            'efootball': [
+                { item: '130 eFootball Coins', price: 'Rp 16.000' },
+                { item: '550 eFootball Coins', price: 'Rp 79.000' },
+                { item: '1040 eFootball Coins', price: 'Rp 149.000' },
+                { item: '2130 eFootball Coins', price: 'Rp 299.000' },
+                { item: '3250 eFootball Coins', price: 'Rp 449.000' }
             ],
-            'ea-fc-mobile': [
-                { item: '100 FC Points', price: 'Rp 16.000' },
-                { item: '520 FC Points', price: 'Rp 79.000' },
-                { item: '1070 FC Points', price: 'Rp 159.000' },
-                { item: '2200 FC Points', price: 'Rp 319.000' },
-                { item: 'Silver Star Pass', price: 'Rp 149.000' }
+            'honor-of-kings': [
+                { item: '80 Tokens', price: 'Rp 15.000' },
+                { item: '240 Tokens', price: 'Rp 45.000' },
+                { item: '400 Tokens', price: 'Rp 75.000' },
+                { item: '800 Tokens', price: 'Rp 149.000' },
+                { item: 'Weekly Card Plus', price: 'Rp 30.000' }
             ]
         };
 
-        const currentConfig = gameThemes[gameSlug] || gameThemes['mobile-legends'];
+        const currentConfig = gameThemes[gameSlug] || {
+            name: rawSlug.toUpperCase().replace(/-/g, ' '),
+            bgColor: mlBgColor,
+            cardBg: '#121c33',
+            accentColor: '#3b82f6',
+            priceColor: '#60a5fa',
+            bgImage: 'none'
+        };
         
         // Terapkan warna background body & variabel CSS
         document.documentElement.style.setProperty('--bg-color', currentConfig.bgColor);
@@ -573,7 +567,7 @@
 
         document.getElementById('gameTitle').innerText = currentConfig.name;
 
-        // LOGIKA DINAMIS INPUT AKUN UNTUK SEMUA 9 GAME
+        // LOGIKA DINAMIS INPUT AKUN
         const accountGroup = document.getElementById('accountInputGroup');
 
         if (gameSlug === 'roblox') {
@@ -607,10 +601,6 @@
                     <input type="number" id="waInput" placeholder="No. WhatsApp (Aktif)" oninput="clearError('Account')">
                 </div>
             `;
-        } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile' || gameSlug === 'codm') {
-            accountGroup.innerHTML = `
-                <input type="text" id="userIdInput" placeholder="Masukkan User ID ${currentConfig.name}" oninput="clearError('Account')">
-            `;
         } else if (gameSlug === 'genshin-impact' || gameSlug === 'honkai-star-rail') {
             accountGroup.innerHTML = `
                 <div class="input-row">
@@ -620,20 +610,16 @@
                         <option value="Asia">Asia</option>
                         <option value="America">America</option>
                         <option value="Europe">Europe</option>
-                        <option value="TW_HK_MO">TW, HK, MO</option>
+                        <option value="TW_HK_MO">TW / HK / MO</option>
                     </select>
                 </div>
             `;
-        } else if (gameSlug === 'valorant') {
+        } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile' || gameSlug === 'bloodstrike' || gameSlug === 'efootball' || gameSlug === 'honor-of-kings') {
             accountGroup.innerHTML = `
-                <input type="text" id="userIdInput" placeholder="Riot ID + Tagline (Contoh: Username#1234)" oninput="clearError('Account')">
-            `;
-        } else if (gameSlug === 'ea-fc-mobile') {
-            accountGroup.innerHTML = `
-                <input type="text" id="userIdInput" placeholder="Masukkan UID EA FC Mobile" oninput="clearError('Account')">
+                <input type="text" id="userIdInput" placeholder="Masukkan User ID / Player ID" oninput="clearError('Account')">
             `;
         } else {
-            // Mobile Legends (Default)
+            // Mobile Legends & Default Game
             accountGroup.innerHTML = `
                 <div class="input-row">
                     <input type="text" id="userIdInput" placeholder="Masukkan User ID" oninput="clearError('Account')">
@@ -644,7 +630,11 @@
 
         // RENDER NOMINAL
         const nominalContainer = document.getElementById('nominalGroup');
-        const products = gameProducts[gameSlug] || gameProducts['mobile-legends'];
+        const products = gameProducts[gameSlug] || [
+            { item: '100 Nominal Game', price: 'Rp 15.000' },
+            { item: '500 Nominal Game', price: 'Rp 75.000' },
+            { item: '1000 Nominal Game', price: 'Rp 145.000' }
+        ];
         
         products.forEach(prod => {
             const div = document.createElement('div');
@@ -714,16 +704,16 @@
                 if (!userId || !server) {
                     isValid = false;
                 } else {
-                    userParamData = `${userId} (${server})`;
+                    userParamData = `${userId} (Server: ${server})`;
                 }
-            } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile' || gameSlug === 'codm' || gameSlug === 'valorant' || gameSlug === 'ea-fc-mobile') {
+            } else if (gameSlug === 'free-fire' || gameSlug === 'pubg-mobile' || gameSlug === 'bloodstrike' || gameSlug === 'efootball' || gameSlug === 'honor-of-kings') {
                 const userId = document.getElementById('userIdInput').value.trim();
                 if (!userId) {
                     isValid = false;
                 } else {
                     userParamData = userId;
                 }
-            } else { // Mobile Legends
+            } else { // Mobile Legends & Default
                 const userId = document.getElementById('userIdInput').value.trim();
                 const zoneId = document.getElementById('zoneIdInput') ? document.getElementById('zoneIdInput').value.trim() : '';
                 if (!userId) {
