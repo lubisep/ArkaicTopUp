@@ -247,6 +247,7 @@
                 <li><a href="riwayat.html"><i class="fa-solid fa-cart-shopping"></i> <span>Riwayat Pembelian</span></a></li>
                 <li><a href="faq.html"><i class="fa-solid fa-circle-question"></i> <span>Pertanyaan Umum</span></a></li>
                 <li><a href="terms.html"><i class="fa-solid fa-file-contract"></i> <span>Syarat & Ketentuan</span></a></li>
+                <li><a href="admin.html"><i class="fa-solid fa-user-gear"></i> <span>Admin Panel</span></a></li>
             </ul>
         </div>
 
@@ -276,7 +277,7 @@
         </div>
 
         <!-- DAFTAR GAME -->
-        <div class="games-grid">
+        <div class="games-grid" id="gamesGrid">
             <a href="game.html?slug=mobile-legends" class="game-card">
                 <img src="assets/ml.jpg" alt="Mobile Legends" class="game-img">
                 <div class="game-title">Mobile Legends</div>
@@ -296,5 +297,26 @@
         </div>
     </div>
 
+    <!-- SCRIPT UNTUK LOAD GAME DARIN ADMIN PANEL -->
+    <script>
+        function loadAdminGames() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            const customGames = JSON.parse(localStorage.getItem('customGames')) || [];
+
+            customGames.forEach(game => {
+                const gameCard = document.createElement('a');
+                gameCard.href = game.link;
+                gameCard.className = 'game-card';
+                gameCard.innerHTML = `
+                    <img src="${game.image}" alt="${game.name}" class="game-img">
+                    <div class="game-title">${game.name}</div>
+                `;
+                gamesGrid.appendChild(gameCard);
+            });
+        }
+
+        // Panggil fungsi saat halaman selesai dimuat
+        document.addEventListener('DOMContentLoaded', loadAdminGames);
+    </script>
 </body>
 </html>
