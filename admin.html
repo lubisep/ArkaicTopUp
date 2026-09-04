@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Arkaic TopUp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0d1222; color: #ffffff; padding: 40px 20px; display: flex; justify-content: center; }
+        .admin-card { background: #171e36; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 30px; width: 100%; max-width: 600px; }
+        h2 { color: #3b82f6; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 14px; color: #8b92b0; margin-bottom: 5px; }
+        input { width: 100%; padding: 10px; background: #0d1222; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: white; }
+        .btn-add { width: 100%; background: #2563eb; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-add:hover { background: #1d4ed8; }
+        
+        .game-list-title { margin-top: 30px; margin-bottom: 15px; font-size: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .game-item { display: flex; justify-content: space-between; align-items: center; background: #0d1222; padding: 10px 15px; border-radius: 6px; margin-bottom: 10px; }
+        .btn-delete { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-card">
+        <h2><i class="fa-solid fa-user-gear"></i> Admin Panel - Tambah Game</h2>
+        
+        <form id="addGameForm">
+            <div class="form-group">
+                <label>Nama Game</label>
+                <input type="text" id="gameName" placeholder="Contoh: Genshin Impact" required>
+            </div>
+            <div class="form-group">
+                <label>URL Gambar Banner Game</label>
+                <input type="url" id="gameImage" placeholder="https://link-gambar.com/foto.jpg" required>
+            </div>
+            <div class="form-group">
+                <label>Link Halaman Topup (Target File)</label>
+                <input type="text" id="gameLink" placeholder="genshin.html" required>
+            </div>
+            <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Tambahkan Game</button>
+        </form>
+
+        <div class="game-list-title">Daftar Game Tambahan</div>
+        <div id="addedGamesContainer"></div>
+        
+        <a href="index.html" style="color: #8b92b0; text-decoration: none; font-size: 13px; display: inline-block; margin-top: 15px;">← Kembali ke Beranda</a>
+    </div>
+
+    <script>
+        const form = document.getElementById('addGameForm');
+        const container = document.getElementById('addedGamesContainer');
+
+        function loadGames() {
+            container.innerHTML = '';
+            const games = JSON.parse(localStorage.getItem('customGames')) || [];
+            
+            if(games.length === 0) {
+                container.innerHTML = '<p style="color:#585e7a; font-size: 13px;">Belum ada game tambahan.</p>';
+                return;
+            }
+
+            games.forEach((game, index) => {
+                container.innerHTML += `
+                    <div class="game-item">
+                        <span><strong>${game.name}</strong> (${game.link})</span>
+                        <button class="btn-delete" onclick="deleteGame(${index})"><i class="fa-solid fa-trash"></i> Hapus</button>
+                    </div>
+                `;
+            });
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('gameName').value;
+            const image = document.getElementById('gameImage').value;
+            const link = document.getElementById('gameLink').value;
+
+            const games = JSON.parse(localStorage.getItem('customGames')) || [];
+            games.push({ name, image, link });
+            
+            localStorage.setItem('customGames', JSON.stringify(games));
+            form.reset();
+            loadGames();
+            alert('Game berhasil ditambahkan!');
+        });
+
+        function deleteGame(index) {
+            const games = JSON.parse(localStorage.getItem('customGames')) || [];
+            games.splice(index, 1);
+            localStorage.setItem('customGames', JSON.stringify(games));
+            loadGames();
+        }
+
+        loadGames();
+    </script>
+</body>
+</html>
